@@ -1,0 +1,329 @@
+@charset "utf-8";
+
+    
+/* 레이아웃 */
+#mNav { display: none; position: absolute; top: 10px; right: 14px;}
+#header {border-bottom: 1px solid #c6c6c6; background: #fff; position: fixed; z-index: 9999; width: 100%;}
+#banner {position: relative; padding-top: 63px;}
+#movie { background: #f8f8f8; }
+#event { }
+#opening { margin: 17px 0; background: url(../img/bg01.jpg) no-repeat center top; background-size: cover;
+}
+#new {}
+
+/* 가운데 영역 */
+.container {position: relative; width: 1280px; margin: 0 auto; background: rgba(0,0,0,0); }
+
+/* 로우 영역 */
+.row {padding: 0 28px;}
+
+/* 모바일 메뉴 */
+.ham { display: block; width: 25px; height: 10px; background: rgba(0,0,0,0); padding: 15px 10px 10px 10px;}
+.ham span { display: block; position: relative; width: 25px; height: 4px; background: #39106a; }
+.ham span:before { 
+    content: '';
+    width: 25px; height: 4px;
+    background: #39106a;
+    position: absolute; left: 0; bottom: -7px;
+}
+.ham span:after { 
+    content: '';
+    width: 25px; height: 4px;
+    background: #39106a;
+    position: absolute; left: 0; top: -7px;
+}
+
+/* 헤더 영역 */
+.header h1 {float: left;}
+.header h1 em {padding: 15px 8px 5px 0; display: inline-block;}
+.header h1 em img {width: 155px;}
+.header h1 strong {display: block; position: absolute; left: 194px; top: 23px;}
+.header h1 strong img {width: 126px;}
+.header .nav {float: right;}
+.header .nav ul {border-left: 1px solid #c6c6c6}
+.header .nav ul li {float: left; width: 103px; text-align: center; border-right: 1px solid #c6c6c6;}
+.header .nav ul li a {display: block; padding: 19px 10px; font-size: 17px; font-weight: 700; color: #444;}
+
+/* 배너 */
+.banner-menu {overflow: hidden; position: absolute; left: 0; top: 83px; width: 100%; height: 100px; z-index: 10;}
+.banner-menu a {color: #fff; font-size: 16px; transition: all 0.3s;}
+.banner-menu a:hover {color: #c1c1c1;}
+.banner-menu .bm-left {float: left;}
+.banner-menu .bm-left ul {padding-top: 7px;}
+.banner-menu .bm-left li {display: inline; position: relative; margin-right: 30px;}
+.banner-menu .bm-left li.total {margin-right: 20px;}
+.banner-menu .bm-left li.total i { padding-right: 7px;}
+.banner-menu .bm-left li.total a {font-size: 14px; padding: 3px 10px; display: inline-block; border: 1px solid #fff; transition: all 0.3s;}
+.banner-menu .bm-left li.total a:hover {background: #fff; border-color: #000; color: #000;}
+.banner-menu .bm-right {float: right; overflow: hidden;}
+.banner-menu .bm-right ul {float: left;}
+.banner-menu .bm-right ul:first-child {padding-top: 7px;}
+.banner-menu .bm-right li {position: relative; display: inline; text-align: center; margin-right: 20px;}
+.banner-menu .bm-right li.line {margin-right: 30px;}
+.banner-menu .bm-right li.white {margin-right: 10px;}
+.banner-menu .bm-right li.white a {width: 80px; background-color: #fff; color: #3a0e6a; padding: 7px 30px 9px 30px; display: inline-block; border: 1px solid #fff;}
+.banner-menu .bm-right li.purple {margin-right: 0;}
+.banner-menu .bm-right li.purple a {width: 80px; background-color: #3a0e6a; color: #fff; padding: 7px 30px 9px 30px; display: inline-block; border: 1px solid #6e40c4;}
+.banner-menu li.line:after {content: ''; width: 1px; height: 14px; background: #fff; position: absolute; right: -18px; top: 2px;}
+
+/* 슬라이드 */
+.slider { width: 100%; height: 600px;}
+.slider .ss1 { background: url(../img/swiper02.jpg) no-repeat center center; background-size: cover;}
+.slider .ss2 { background: url(../img/swiper02.jpg) no-repeat center center; background-size: cover;}
+.slider .ss3 { background: url(../img/swiper02.jpg) no-repeat center center; background-size: cover;}
+
+.slider .swiper-slide h2 { display: inline-block; font-size: 62px; line-height: 70px; color: #fff; margin-top: 200px; position: relative;}
+.slider .swiper-slide h2:after { content: ''; width: 100%; height: 1px; background: rgba(255,255,255,0.3); position: absolute; left: 0; bottom: -35px;}
+.slider .swiper-slide h2 em { display: block; font-size: 59px; font-weight: 100;}
+.slider .swiper-slide p { font-size: 27px; color: #fff; padding-top: 55px; margin-top: 0;}
+
+/* 무비 */
+.movie { padding: 100px 0; }
+.movie-title { margin-bottom: 60px;}
+.movie-title ul { overflow: hidden; width: 848px; margin: 0 auto;}
+.movie-title li { float: left; width: 210px; text-align: center; border: 1px solid #c4c4c4; margin-right: -1px;}
+.movie-title li a { display: block; padding: 15px 0; font-size: 18px; color: #666; font-weight: 700;}
+.movie-title li.active a {background: #666; color: #fff;}
+.movie-chart { overflow: hidden; position: relative; z-index: 30;}
+.movie-chart > div > div > div { float: left; width: 292px;  margin-right: 18px;}
+.movie-chart > div > div > div:last-of-type { margin-right: 0;}
+.movie-chart > div > div > div .poster { position: relative; z-index: 100; }
+.movie-chart > div > div > div .poster img { display: block;}
+.movie-chart > div > div > div .poster .rank { position: absolute; top: 17px; left: 0; width: 50px; height: 50px; line-height: 50px; background: #38116a; text-align: center; font-size: 22px; box-shadow: 3px 3px 8px rgba(0,0,0,0.5);}
+.movie-chart > div > div > div .poster .rank strong { color: #fff; text-shadow: 2px 2px 3px rgba(0,0,0,1);}
+.movie-chart > div > div > div .poster .mx { position: absolute; top: 17px; right: 17px;}
+.movie-chart > div > div > div .poster .mx span { display: block; width: 103px; height: 25px;}
+.movie-chart > div > div > div .poster .mx .m { background-position: 0 -75px; }
+.movie-chart > div > div > div .poster .mx .b { background-position: 0 -100px; }
+.movie-chart > div > div > div .info { background: #fff; padding: 17px; border: 1px solid #d9d9d9;}
+.movie-chart > div > div > div .info h3 { color: #333; font-size: 30px; font-weight: 700; margin-bottom: 20px;}
+.movie-chart > div > div > div .info h3 span {  display: inline-block; width: 29px; height: 29px; margin-top: 9px; vertical-align: -3px;}
+.movie-chart > div > div > div .info h3 span.all { background-position: -87px -126px;}
+.movie-chart > div > div > div .info h3 span.a12 { background-position: -1px -126px;}
+.movie-chart > div > div > div .info h3 span.a15 { background-position: -30px -126px;}
+.movie-chart > div > div > div .info h3 span.a19 { background-position: -59px -126px;}
+.movie-chart > div > div > div .info .info-btn { overflow: hidden; position: relative; z-index: 1000;}
+.movie-chart > div > div > div .info .info-btn a {  display: block; float: left; width: 49%; padding: 15px 0; margin-right: 2%; background: #f2f2f2; font-size: 18px;  text-align: center; }
+.movie-chart > div > div > div .info .info-btn a:last-child { margin-right: 0;}
+.movie-chart > div > div > div .poster .p-over { display: none; width: 100%; height: 100%; position: absolute; z-index: 110; top: 0; background: rgba(0,0,0,0.7); color: #fff;}
+.movie-chart > div > div > div .poster:hover .p-over {display: block;}
+.movie-chart > div > div > div .poster .p-over .comment { position: absolute; text-align: center; top: 35%; width: 100%;}
+.movie-chart > div > div > div .poster .p-over .comment span { display: block; margin-top: 10px;}
+.movie-chart > div > div > div .poster .p-over .like { position: absolute; width: 100%; text-align: center; bottom: 0; padding: 30px; box-sizing: border-box; font-size: 20px; background: #696969; color: #ccc;}
+.movie-chart > div > div > div .poster .p-over .like:hover { background: #3a3a3a; color: #45b4ff;}
+.movie-chart > div > div > div .poster .p-over .like em {display: block;}
+
+/* 이벤트 */
+.event { overflow: hidden; padding: 100px 0;}
+.event h2 { font-size: 30px; margin-bottom: 20px; font-weight: 500;}
+.event img { display: block;}
+.event .event-left { overflow: hidden; float: left; width: 66%; margin-right: 2%; }
+.event .event-left .event-box1 { float: left; width: 50%;}
+.event .event-left .event-box2 { float: left; width: 50%;}
+.event .event-right { float: left; width: 32%;}
+.swiper-container3 { position: relative;}
+
+/* 오프닝 */
+.opening { padding: 100px 0; text-align: center; color: #bb9b51;}
+.opening h2 { margin-bottom: 15px;}
+.opening h2 .grand { background-position: 0 -175px; display: inline-block; width: 330px; height: 50px;}
+.opening .date { background-position: 0 -225px; display: inline-block; width: 260px; height: 45px;}
+.opening .desc { font-size: 35px; font-weight: 300; padding-bottom: 20px; background: url(../img/bar.png) no-repeat bottom center; background-size: 100%; margin: 0;} 
+.opening .open-box { overflow: hidden; padding: 20px 3% 0 3%;}
+.opening .open-box > div { float: left; width: 27.3333%; margin: 4% 3% 0 3%; border: 1px solid #3e4b44; box-sizing: border-box; background: rgba(0,0,0,0.5);}
+.opening .open-box > div h3 { display: inline-block; color: #fff; border: 1px solid #6e3abb; font-size: 20px; padding: 15px 25px; background: #3b1a6b; margin-top: -24px; line-height: 1; font-weight: 300;}
+.opening .open-box > div p { font-size: 27px; color: #fff; margin: 0; padding: 6% 0 10%; font-weight: 300; font-weight: bold;}
+.opening .open-box > div p em { display: block; font-weight: bold;}
+.opening .open-box > div p strong { display: block; font-weight: bold;}
+
+/* 새로운 영화 */
+.new { padding: 100px 0; position: relative;}
+.new h2 { font-size: 30px; font-weight: 500; margin-bottom: 20px;}
+.new .new-left { position: relative; margin-right: 423px; height: 500px; background: #ccc url(../img/new01.jpg) no-repeat center; background-size: cover;}
+.new .new-left .play { position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; transform: translate(-50%,-50%);}
+.new .new-left .play .st0 { fill: #fff; opacity: 0.3;}
+.new .new-left .play .st1 { fill: #fff;}
+.new .new-right { position: absolute; top: 165px; right: 0; width: 400px; height: 500px; background: #f0f0f0; padding: 34px; box-sizing: border-box;}
+.new .new-right .title { font-size: 28px; color: #000;}
+.new .new-right .release { font-size: 12px; color: #333;}
+.new .new-right .star { padding: 13px 0;}
+.new .new-right .star strong { font-size: 15px; padding-left: 5px;}
+.new .new-right .star span { display: inline-block; width: 20px; height: 20px; vertical-align: -4px;}
+.new .new-right .star .star0 { background-position: -374px 0;}
+.new .new-right .star .star1 { background-position: -393px 0;}
+.new .new-right .star .star2 { background-position: -412px 0;}
+.new .new-right .summary { font-size: 14px;}
+.new .new-right .genre { padding-bottom: 3px;}
+.new .new-right .age { padding-bottom: 10px;}
+.new .new-right .desc { height: 108px; overflow: hidden; margin-bottom: 20px;}
+.new .new-right .select { overflow: hidden;}
+.new .new-right .select .s1 { float: left; width: 49%; margin-right: 2%; background: #000;}
+.new .new-right .select .s2 { float: left; width: 49%; background: #000;}
+.new .new-right .select .s3 { float: left; width: 100%; margin-top: 2%;}
+.new .new-right .btn { overflow: hidden; margin-top: 2%; text-align: center;}
+.new .new-right .btn a { float: left; width: 49%; box-sizing: border-box; display: block; padding: 10px 30px 12px 30px;}
+.new .new-right .btn a.white { background: #fff; margin-right: 2%; color: #3a0e6a; border: 1px solid #3a0e6a;}
+.new .new-right .btn a.purple { background: #3a0e6a; color: #fff; border: 1px solid #6e40c4;}
+
+/* help */
+.help { padding-bottom: 200px;}
+.help article { float: left; width: 32%; margin-right: 2%;}
+.help article:last-child { margin-right: 0;}
+.help article h3 { font-size: 30px; font-weight: 500; margin-bottom: 20px;}
+.help article > div { border: 1px solid #dbdbdb; height: 350px;}
+
+/* 공지사항*/
+.notice { padding: 17px; position: relative; }
+.notice > ul > li:last-of-type > ul { display: none;}
+.notice ul { overflow: hidden;}
+.notice ul li { float: left; text-align: center; margin-right: -1px;}
+.notice ul li.active a { background: #fff;}
+.notice ul li a { border: 1px solid #dbdbdb; font-size: 15px; color: #666; display: block; width: 80px; padding: 10px 20px; background: #f5f5f5; }
+.notice ul li ul { position: absolute; left: 17px; top: 70px; width: 90%;}
+.notice ul li ul li { width: 100%; box-sizing: border-box; text-align: left; padding: 17px; border-bottom: 1px solid #dbdbdb;}
+.notice ul li ul li:last-child { border-bottom: none;}
+.notice ul li ul li dt em { color: #999;}
+.notice ul li ul li dt .bar { position: relative; padding-right: 14px;}
+.notice ul li ul li dt .bar:after { content: ''; position: absolute; right: 4px; top: 6px; width: 1px; height: 10px; background: #999;}
+.notice ul li ul li dd { color: #777; padding-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+
+
+/* 할인카드 */
+.card { padding: 15px;}
+.card ul {}
+.card li { position: relative; border: 1px solid #d7d7d7; padding: 17px; margin-bottom: 15px; min-height: 102px; box-sizing: border-box;}
+.card li a {}
+.card li a span { position: absolute; left: 17px; top: 17px;}
+.card li a span img { width: 105px;}
+.card li a strong { display: block; font-size: 18px; padding-left: 120px; color: #777;}
+.card li a em { display: block; font-size: 14px; padding-left: 120px; color: #777; font-weight: 300;}
+
+/* 미디어 쿼리 */
+@media (max-width: 1290px){
+    .container { width: 100%;}  
+    .header .nav ul li { width: 93px;}
+    .header .nav ul li a { font-size: 15px; padding: 17px 10px;}
+    .header h1 em { padding: 11px 8px 5px 0; }
+    .header h1 strong { top: 19px;}    
+    .swiper-button-prev, .swiper-button-next{ display: none;}    
+}
+
+@media (max-width: 1024px){
+    #mNav { display: block;}
+    .row { padding: 0 24px;}
+    .header h1 { float: none; text-align: center;}
+    .header h1 strong {left: 24px;}
+    .nav { display: none;}
+    #banner {padding-top: 52px;}
+    
+    
+    .banner-menu .bm-left ul { display: none;}
+    .banner-menu .bm-right ul:first-child { display: none;}    
+    
+    #new { top: 35px;}
+}
+
+@media (max-width: 960px){
+    .slider {height: 500px;}
+    .slider .swiper-slide h2 { margin-top: 170px; font-size: 37px; line-height: 45px;}
+    .slider .swiper-slide h2 em { font-size: 34px;}
+    .slider .swiper-slide p { font-size: 16px; padding-top: 35px;}
+    .slider .swiper-slide h2:after { bottom: -20px;}
+    .movie-title ul { width: auto;}
+    .movie-title li { width: 25%; box-sizing: border-box;}
+    .opening { padding: 50px 0;}
+    .opening .open-box { display: none;}
+    .opening .desc { font-size: 25px; background: none;}
+    
+    .new .new-left { width: 100%; margin-right: 0; height: 400px;}
+    .new .new-right { width: 100%; position: relative; top: 0; height: auto;}
+}
+
+@media (max-width: 768px){
+    body { background: #d9d7e0;}    
+    #mNav { right: 6px;}
+    .row { padding: 0 16px;}
+    .header h1 strong {display: none;}
+    .header h1 { text-align: left;}
+    #movie .row { background: #fff; margin: 24px 24px 0 24px; padding: 24px;}
+    #movie .ir-so { position: static; width: auto; height: auto; line-height: normal; text-indent: 0; font-size: 24px; font-weight: bold; padding-bottom: 20px;}
+    #movie { background: none;}
+    .movie { padding: 0;}
+    .movie-title { margin-bottom: 30px;}
+    .movie-title ul { position: relative; padding-bottom: 10px;}
+    .movie-title ul:before { content: ''; position: absolute; z-index: 1; left: 0; bottom: 0; width: 100%; height: 2px; background: #e1e1e1;}
+    .movie-title li { width: auto; border: 0; }
+    .movie-title li a { padding: 0; font-size: 18px; color: #666; font-weight: 400; margin-right: 35px;}
+    .movie-title li.active a { position: relative; background: none; color: #666; }
+    .movie-title li.active a:before { content: ''; position: absolute; z-index: 2; left: 0; bottom: -10px; width: 100%; height: 2px; background: #666;}
+    #event .row {padding: 24px;}
+    .event { padding: 24px; background: #fff;}
+    .event h2 { font-size: 24px; font-weight: 700;}    
+    .event .event-left { width: 100%; float: none; margin-right: 0;}
+    .event .event-right { display: none;}
+    
+    #opening { margin: 0;}
+    #new .row { padding: 0 24px;}
+    .new { background: #fff; padding: 24px; margin-top: 24px;}
+    .new h2 { font-size: 24px; font-weight: 700; height: 27px; margin-bottom: 10px;}
+    .new .new-right { padding: 24px;}
+    
+}
+
+@media (max-width: 600px){    
+    .slider {height: 400px;}
+    .slider .swiper-slide h2 { margin-top: 140px; font-size: 24px; line-height: 30px;}
+    .slider .swiper-slide h2 em { font-size: 20px;}
+    .slider .swiper-slide p { font-size: 14px; padding-top: 20px;}
+    .slider .swiper-slide h2:after { bottom: -5px;}
+    .banner-menu .bm-right li.white {margin-right: 10px;}
+    .banner-menu { top: 16px;}
+    .banner-menu .bm-right li.white a { font-size: 14px; padding: 3px 5px 5px 5px; color: #fff; background: rgba(0,0,0,0.6); border-color:     #fff;}
+    .banner-menu .bm-right li.purple a {font-size: 14px; padding: 3px 5px 5px 5px; color: #fff; background: rgba(0,0,0,0.6); border-color: #fff;}
+        
+    #movie .container {}
+    #movie .container:after { content: ''; position: absolute; top: 0; right: 0; z-index: 20; width: 8px; height: 100%; background: #d9d7e0;}
+    #movie .row { position: relative; margin: 8px 0 8px 8px; padding: 16px 0 16px 16px;}
+    #movie .row:after { content: ''; position: absolute; top: 0; right: 0; z-index: 10; width: 24px; height: 100%; background: #fff;}
+    #movie .ir-so { font-size: 18px; padding-bottom: 10px;}
+    .movie-title { margin-bottom: 20px;}
+    .movie-title ul { padding-bottom: 8px;}    
+    .movie-title li a { font-size: 14px; margin-right: 15px;}
+    .movie-title li.active a:before {bottom: -8px;}
+    .movie-chart > div > div > div .info { padding: 5px;}
+    .movie-chart > div > div > div .info h3 {  text-align: center; margin: 5px 0 10px;}
+    .movie-chart > div > div > div .info h3 strong { display: block; font-size: 19px; color: #222; font-weight: 300;}
+    .movie-chart > div > div > div .info h3 span { display: none;}
+    .movie-chart > div > div > div .info .info-btn a { width: 52%; margin-left: 24%; display: block; margin-right: 0; padding: 5px; color: #777; margin-bottom: 5px; box-sizing: border-box; font-size: 14px; background: none; border: 1px solid #ddd;}
+    .movie-chart > div > div > div .info .info-btn a:last-child { display: none;}
+    #event .row { padding: 0 8px;}
+    .event { padding: 16px;}
+    .event h2 { font-size: 18px; margin-bottom: 10px;}
+    
+    #opening { margin: 8px 0;}
+    .opening { padding: 20px 0;}
+    .opening h2 { margin-bottom: 10px;}
+    .opening h2 .grand { background-size: 300px; background-position: 0 -105px; width: 198px; height: 25px;}
+    .opening .date { display: none;}
+    .opening .desc { font-size: 16px; font-weight: 400; padding-bottom: 0;}
+    
+    #new .row { padding: 0 8px;}
+    .new { background: #fff; padding: 16px; margin-top: 8px;}
+    .new h2 { font-size: 18px; font-weight: 700; height: 27px; margin-bottom: 0px; padding-bottom: 10px;}
+    .new .new-left { height: 300px;}
+    .new .new-right { padding: 17px;}
+    .new .new-right .title{ font-size: 22px;}
+    .new .new-right .star { padding: 9px 0;}
+    .new .new-right .select .s1 { width: 100%; margin-right: 0; margin-bottom: 2%;}
+    .new .new-right .select .s2 { width: 100%;}    
+    
+    
+}
+
+@media (max-width: 480px){
+    
+}
+
+@media (max-width: 320px){
+    .movie-title li a { margin-right: 9px; font-size: 13px;}
+}

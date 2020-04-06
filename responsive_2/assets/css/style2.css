@@ -1,0 +1,31 @@
+/* layout */
+body {background: #21252c;}
+#nav {position: fixed; left: 0; top: 0; z-index: 1000; width: 100%; background: #21252c;}
+#contents {}
+#section1 {height: 100vh; }
+#section2 {height: 2000px; background: #000;}
+#section3 {}
+#section4 {}
+#section5 {}
+#section6 {}
+
+/* container */
+.container { max-width: 1900px; width: 1500px; margin: 0 auto;}
+
+/* nav */
+.nav {border-bottom: 1px solid #fff; overflow: hidden; }
+.nav h1 {float: left; font-size: 14px; padding: 30px; padding-left: 0;}
+.nav .menu {float: right;}
+.nav .menu li {display: inline;}
+.nav .menu li a {display: inline-block; padding: 30px 20px; font-size: 13px;}
+.nav .menu li a:last-child {padding-right: 0;}
+
+/* sec1 */
+.sec1 {}
+.sec1 .stext {position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);}
+.sec1 .stext > div {font-size: 8vw; white-space: nowrap}
+
+/* mediaquery */
+@media (max-width:1520px){
+    .container {width: 100%;}
+}
