@@ -7,662 +7,430 @@
     <meta name="viewport" content="initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900&display=swap&subset=korean" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Mallanna&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/pc.css">
-    <link rel="stylesheet" href="css/note.css">    
-    <link rel="stylesheet" href="css/tab.css">
-    <link rel="stylesheet" href="css/mob.css">
+    <link rel="stylesheet" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="./assets/css/pc.css">
+    <link rel="stylesheet" href="./assets/css/note.css">    
+    <link rel="stylesheet" href="./assets/css/tab.css">
+    <link rel="stylesheet" href="./assets/css/mob.css">
     <link rel="stylesheet" href="http://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-    <script src="script/jquery-3.4.1.min.js"></script>
-    <script>        
-        $(function(){
-            var current=0;// banner current slide check
-            var sct=0;  // current scrolltop value
-            
-            
-           ////////////// height Initialize ///////////////////
-            var section_4_height=$(".section-4 .slide-content").height()+$(".section-4 .container>h2").height()+25;//position으로 내용물이 떠버려서 부모 섹션이 높이값을 잃어버리므로 자식 컨텐츠 height값의 총합을 구한다음 부모값으로 넣어준다.  자식height총합 = 부모 height
-//            var cw = $(window).width();
-//            if(cw>1280){
-//                $(".section-4 .container").css("height",542);    
-//            }
-            
-            
-            /*var section_5_height=$(".section-5 .con.long.top").height();*/
-            /*con-2의 height값에 다른 con의 값을 맞추기 위해서 con-2의 height값을 구해서 다른 con에 넣어준다.*/                       
-            /*$(".section-5 .con.top").css("height",section_5_height);
-            /////////////// height Initialize ///////////////////*/
-            
-            
-            
-            ////////////////header nav click event ///////////////////////
-            $(".lnb>ul>li").click(function(e){
-                e.stopPropagation();               
-                $(".sub-menu").stop().fadeOut(250);
-                $(this).children(".sub-menu").stop().fadeToggle(250);
-            });            
-            $(document).click(function(){
-               $(".sub-menu").stop().hide(); 
-            });
-            ///////////// header nav click event //////////////////////
-            
-            
-            //////////////////// banner control ////////////////////////// 
-            var prevBtn=$(".prev");            
-            var nextBtn=$(".next");
-            prevBtn.attr("onOff","on");
-            nextBtn.attr("onOff","on");
-            prevBtn.click(function(){       
-                if(prevBtn.attr("onOff")=="on"){ //1초지나야 다시 클릭 할수있게 바뀐다.
-                    clearInterval(interval);
-                    var i = current-1;
-                    if(i==-1)i=2
-                    fadeControl(i);
-                    $(this).attr("onOff","off");
-                    onOffControl(prevBtn,prevBtn.attr("onOff"),1000);
-                }
-            });
-            nextBtn.click(function(){
-                if(nextBtn.attr("onOff")=="on"){
-                    clearInterval(interval);
-                    var i = (1+current)%3;
-                    fadeControl(i);   
-                    nextBtn.attr("onOff","off");
-                    onOffControl(nextBtn,nextBtn.attr("onOff"),1000);
-                }
-            });
-            $(".control a").each(function(index){
-               $(this).attr("data-index",index); 
-            }).click(function(){
-                var i = $(this).attr("data-index");
-                fadeControl(i);
-            });
-            ////////////// banner control ///////////////////////////// 
-            
-            
-            ////////////// section-2 tab /////////////////////////////
-            
-            var tabBtn=$(".section-2 .left .tab-btn li");  
-            var tabCon=$(".section-2 .left .tab-con>div");
-            var mo_tabBtn=$(".section-2 .mo-left .tab-btn");  
-            var mo_tabCon=$(".section-2 .mo-left .content");
-            mo_tabCon.hide();
-            
-            /*mobile*/
-            mo_tabBtn.click(function(){                
-                $(this).next().slideToggle(300);
-                $(this).toggleClass("active");
-                mo_tabCon.not($(this).next()).slideUp(300);
-                mo_tabBtn.not($(this)).removeClass("active");                
-            });
-            
-            
-            /*mobile*/            
-            tabBtn.each(function(index){
-                $(this).attr("data-index",index); 
-            }).click(function(){
-                var i = $(this).attr("data-index");
-                tabBtn.removeClass("active");
-                $(this).addClass("active");
-                tabCon.hide();
-                tabCon.eq(i).show();
-            });
-            
-            ///////////////////section-2 tab ////////////////////////////
-            
-            
-            //////////////////// section-4 slide //////////////////////
-            var slideCon=$(".section-4 .slide-wrap");
-            var slideW=$(".section-4 .container").width();
-            var moveX=0;
-            var lBtn=$(".section-4 .left");
-            var rBtn=$(".section-4 .right");
-            
-            /* slide 초기화*/
-            slideCon.css("transition","transform 1.5s"); //슬라이드시간 1.5초
-            slideCon.children(".slide-content:last").insertBefore(slideCon.children(".slide-content:first")); 
-            slideCon.css("left", -slideW); 
-            /*lBtn rBtn 광클 막기위해서 attr로 on,off제어 */
-            lBtn.attr("onOff","on");
-            rBtn.attr("onOff","on");            
-            lBtn.click(function(){       
-                if(lBtn.attr("onOff")=="on"){ //1초지나야 다시 클릭 할수있게 바뀐다.
-                    clearInterval(interval); // 자동슬라이드 잠시멈추기위해 clearinterval해줌
-                    moveX+= slideW;
-                    carouselControl("prev"); 
-                    lBtn.attr("onOff","off");
-                    onOffControl(lBtn,lBtn.attr("onOff"),1500); //이 함수에서 다시 setinterval해줌
-                }
-            });
-            rBtn.click(function(){
-                if(rBtn.attr("onOff")=="on"){ 
-                    clearInterval(interval);
-                    moveX+= -slideW;
-                    carouselControl("next"); 
-                    rBtn.attr("onOff","off");
-                    onOffControl(rBtn,rBtn.attr("onOff"),1500);
-                }
-            });
-            ///////////////// section-4 slide //////////////////////////////
-            
-            var interval=setInterval(function(){
-                var i=(1+current)%3;
-                fadeControl(i);
-                
-                moveX += -slideW; 
-                carouselControl();
-            },3000);
-            
-            /////////////// resize ///////////////            
-            var ww;   
-            var s_4_btn=$(".section-4 .btn"); //container 높이바뀜에따라 거기에맞춰 controller의 top높이 조절 
-            
-            /*요소 하나하나의 height값 전부 더해준다.................................ㅎㅎㅎ..*/
-            /* Number($(".section-4 .container>h2").css("marginBottom").replace(/[^-\d\.]/g, '')) 
-            이런식으로쓰면 css값 가져올때 px떼고 가져오기때문에 앞에 Number만 붙여주면 일반 수 처럼 더하고빼고 할 수 있다. */
-            $(window).resize(function(){
-                ww=$(window).width();
-                slideW=$(".section-4 .container").width(); //slideW: 슬라이드가 한번에 넘어가는 가로값                
-                var s_4_height=$(".section-4 .container>h2").height() + Number($(".section-4 .container>h2").css("marginBottom").replace(/[^-\d\.]/g, '')) + $(".section-4 .slide-content img").height() + $(".section-4 .slide-content .text").height() + 25;
-                $(".section-4 .container").css("height",s_4_height);            
-                /*요소들의 총합이 container의 세로길이가 된다.*/
-                
-                var s_4_arr_top=$(".section-4 .container>h2").height()+Number($(".section-4 .container>h2").css("marginBottom").replace(/[^-\d\.]/g, ''))+$(".section-4 .slide-content img").height()/2 - s_4_btn.height()/2 + Number($(".section-4").css("paddingTop").replace(/[^-\d\.]/g, ''));
-                s_4_btn.css("top",s_4_arr_top);
-           
-                if(ww>771){
-                    $(".lnb").css("display","block");
-                    $(".mo-btn").removeClass("onclick");
-                    $(".mo-btn").removeClass("on");
-                }else{
-                    $(".lnb").css("display","none");
-                }
-            });
-            
-            
-            /////////////// resize ///////////////
-            
-            
-            /////////////// top-up버튼 애니메이션 ////////////////////////////
-            $(window).scroll(function(){
-               sct=$(window).scrollTop();
-//                console.log(sct);
-                if(sct>50){
-                    $("#top-up").show();
-                }else{
-                    $("#top-up").hide();
-                }
-                
-            });
-            
-            $("#top-up").click(function(){
-               $('body,html').animate({
-                   scrollTop:0
-               }) ;
-            });
-            /////////////// top-up버튼 애니메이션 ////////////////////////////
-            
-            
-            
-            
-            ///////////////////// function ///////////////////////////////////
-            /*banner fade슬라이드*/
-            function fadeControl(num){         
-                $(".slide-con").eq(current).stop().fadeOut(1000);
-                $(".slide-con").eq(num).stop().fadeIn(1000);
-                $(".control a").removeClass("active");
-                $(".control a").eq(num).addClass("active");
-                current=num;
-            }
-            /*section-4 carousel슬라이드*/
-            function carouselControl(dir){                
-                slideCon.css("transform","translateX("+moveX+"px)");
-                if(dir=="prev"){
-                    slideCon.children(".slide-content:last").insertBefore(slideCon.children(".slide-content:first"));   
-                }else{
-                    slideCon.children(".slide-content:first").insertAfter(slideCon.children(".slide-content:last"));   
-                }                
-                slideCon.css("left",-moveX-slideW);                
-            }
-            /*section-4 중복 클릭 막기위한 함수*/
-            function onOffControl(btn,status,delay){
-                if(status=="off"){
-                    setTimeout(function(){
-                        btn.attr("onOff","on");     
-                        
-                        interval=setInterval(function(){
-                            var i=(1+current)%3;
-                            fadeControl(i);
-                            moveX += -slideW; 
-                            carouselControl();
-                        },3000);
-                        
-                    },delay);
-                }
-            }
-            
-            'select * from tables';
-            ///////////////////// function ///////////////////////////////////
-        });
-    </script>
+    
+    
 </head>
 <body>
-<a href="#content" class="skip">본문 바로가기</a>
-<div id="wrap">    
-    <!-- s: header -->
-    <header>
-        <h1><a href="#"><img src="images/logo2.png" alt="미에로 화이바 로고"></a></h1>
-        <div class="mo-btn">
-            <div class="bar"></div>
-        </div>
-        <script>
-        ////////////mobile tab btn///////////////////////
-            var moBtn=$(".mo-btn");
-            moBtn.click(function(){
-                $(".lnb").slideToggle(300);
-                $(".mo-btn").toggleClass("on");
-                $(".mo-btn").toggleClass("onclick");
-            });
-            
-            
+    <a href="#content" class="skip">본문 바로가기</a>
+    <div id="wrap">    
+        <!-- s: header -->
+        <header>
+            <h1><a href="#"><img src="./assets/images/logo2.png" alt="미에로 화이바 로고"></a></h1>
+            <div class="mo-btn">
+                <div class="bar"></div>
+            </div>
+            <script>
             ////////////mobile tab btn///////////////////////
-        </script>
-        <nav class="lnb">
-            <ul>
-            <li><a href="#">미에로</a>
-                <ul class="sub-menu">
-                <li><a href="#">브랜드 스토리</a></li>
-                <li><a href="#">식이섬유 스토리</a></li>
+                var moBtn=$(".mo-btn");
+                moBtn.click(function(){
+                    $(".lnb").slideToggle(300);
+                    $(".mo-btn").toggleClass("on");
+                    $(".mo-btn").toggleClass("onclick");
+                });
+                
+                
+                ////////////mobile tab btn///////////////////////
+            </script>
+            <nav class="lnb">
+                <ul>
+                <li><a href="#">미에로</a>
+                    <ul class="sub-menu">
+                    <li><a href="#">브랜드 스토리</a></li>
+                    <li><a href="#">식이섬유 스토리</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">제품소개</a>
+                    <ul class="sub-menu long">
+                    <li><a href="#">미에로화이바</a></li>
+                    <li><a href="#">헬씨올리고</a></li>
+                    <li><a href="#">헬씨올리고 프로바이오틱스</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">미에로 스토리</a>
+                    <ul class="sub-menu">
+                    <li><a href="#">TV광고</a></li>
+                    <li><a href="#">인쇄광고</a></li>
+                    <li><a href="#">프로모션</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">미에로 이벤트</a>
+                    <ul class="sub-menu">
+                    <li><a href="#">진행중인 이벤트</a></li>
+                    <li><a href="#">당첨자 발표</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">공지사항</a></li>
                 </ul>
-            </li>
-            <li><a href="#">제품소개</a>
-                <ul class="sub-menu long">
-                <li><a href="#">미에로화이바</a></li>
-                <li><a href="#">헬씨올리고</a></li>
-                <li><a href="#">헬씨올리고 프로바이오틱스</a></li>
-                </ul>
-            </li>
-            <li><a href="#">미에로 스토리</a>
-                <ul class="sub-menu">
-                <li><a href="#">TV광고</a></li>
-                <li><a href="#">인쇄광고</a></li>
-                <li><a href="#">프로모션</a></li>
-                </ul>
-            </li>
-            <li><a href="#">미에로 이벤트</a>
-                <ul class="sub-menu">
-                <li><a href="#">진행중인 이벤트</a></li>
-                <li><a href="#">당첨자 발표</a></li>
-                </ul>
-            </li>
-            <li><a href="#">공지사항</a></li>
-            </ul>
-        </nav>
-    </header>
-    <!-- e: header -->
-    
-    <!-- s: banner -->
-    <section class="banner">       
-        <h2 class="hide">광고영역</h2>
-        <a href="#" class="prev">이전</a>
-        <a href="#" class="next">다음</a>
-        <div class="control">
-            <a href="#" class="active"></a>
-            <a href="#"></a>
-            <a href="#"></a>
-        </div>
-        <div class="slide-con slide-1">
-            <div class="contents">
-                <h2>마시는 식이섬유<br/>미에로화이바</h2>
-                <a href="#" class="fb"><i class="xi-facebook"></i></a>
-                <a href="#" class="ins"><i class="xi-instagram"></i></a>
-                <a href="#" class="you"><i class="xi-youtube-play"></i></a>
+            </nav>
+        </header>
+        <!-- e: header -->
+        
+        <!-- s: banner -->
+        <section class="banner">       
+            <h2 class="hide">광고영역</h2>
+            <a href="#" class="prev">이전</a>
+            <a href="#" class="next">다음</a>
+            <div class="control">
+                <a href="#" class="active"></a>
+                <a href="#"></a>
+                <a href="#"></a>
             </div>
-        </div>
-        <div class="slide-con slide-2">
-            <div class="contents">
-                <h2>아름다움을<br/>디자인하다</h2>
-                <a href="#" class="fb"><i class="xi-facebook"></i></a>
-                <a href="#" class="ins"><i class="xi-instagram"></i></a>
-                <a href="#" class="you"><i class="xi-youtube-play"></i></a>
+            <div class="slide-con slide-1">
+                <div class="contents">
+                    <h2>마시는 식이섬유<br/>미에로화이바</h2>
+                    <a href="#" class="fb"><i class="xi-facebook"></i></a>
+                    <a href="#" class="ins"><i class="xi-instagram"></i></a>
+                    <a href="#" class="you"><i class="xi-youtube-play"></i></a>
+                </div>
             </div>
-        </div>
-        <div class="slide-con slide-3">
-            <div class="contents">
-                <h2>마시는 식이섬유<br/>미에로화이바</h2>
-                <a href="#" class="fb"><i class="xi-facebook"></i></a>
-                <a href="#" class="ins"><i class="xi-instagram"></i></a>
-                <a href="#" class="you"><i class="xi-youtube-play"></i></a>
+            <div class="slide-con slide-2">
+                <div class="contents">
+                    <h2>아름다움을<br/>디자인하다</h2>
+                    <a href="#" class="fb"><i class="xi-facebook"></i></a>
+                    <a href="#" class="ins"><i class="xi-instagram"></i></a>
+                    <a href="#" class="you"><i class="xi-youtube-play"></i></a>
+                </div>
             </div>
-        </div>        
-    </section>
-    <!-- e: banner -->
-    
-    <!-- s: section-1 -->
-    <section class="section-1">
-       <h2 class="hide">미에로화이바 뉴스</h2>
-        <div id="content" class="container clearfix">           
-            <div class="left">
-                <h3>마시는 식이섬유</h3>
-                <img src="images/logo.png" alt="미에로 화이바 로고" class="logo">
-                <img src="images/note_youtube.jpg" alt="유튜브동영상" class="youtube">
+            <div class="slide-con slide-3">
+                <div class="contents">
+                    <h2>마시는 식이섬유<br/>미에로화이바</h2>
+                    <a href="#" class="fb"><i class="xi-facebook"></i></a>
+                    <a href="#" class="ins"><i class="xi-instagram"></i></a>
+                    <a href="#" class="you"><i class="xi-youtube-play"></i></a>
+                </div>
+            </div>        
+        </section>
+        <!-- e: banner -->
+        
+        <!-- s: section-1 -->
+        <section class="section-1">
+        <h2 class="hide">미에로화이바 뉴스</h2>
+            <div id="content" class="container clearfix">           
+                <div class="left">
+                    <h3>마시는 식이섬유</h3>
+                    <img src="./assets/images/logo.png" alt="미에로 화이바 로고" class="logo">
+                    <img src="./assets/images/note_youtube.jpg" alt="유튜브동영상" class="youtube">
+                </div>
+                <div class="right">
+                    <h3>미에로의 새로운 소식을 알려드립니다.</h3>
+                    <h2>미에로화이바 News</h2>
+                    <ul class="text">
+                        <li><a href="#">'미에로화이바'와 '삼성헬스' 콜라보 마케팅 …</a></li>
+                        <li><a href="#">'미에로화이바'와 '삼성헬스' 콜라보 마케팅 …</a></li>
+                        <li><a href="#">'미에로화이바'와 '포트리스M' 콜라보 마케팅…</a></li>
+                        <li><a href="#">국내 최초 식이섬유음료, `미에로화이바` 출시…</a></li>
+                        <li><a href="#">현대약품, 전소민과 함께한 '미에로화이바' T…</a></li>
+                        <li><a href="#">빛나는 미모의 미에로화이바 모델 강소라</a></li>
+                        <li><a href="#">PRINKLE과 함께하는 비타민C9금 개그 캠…</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="right">
-                <h3>미에로의 새로운 소식을 알려드립니다.</h3>
-                <h2>미에로화이바 News</h2>
-                <ul class="text">
-                    <li><a href="#">'미에로화이바'와 '삼성헬스' 콜라보 마케팅 …</a></li>
-                    <li><a href="#">'미에로화이바'와 '삼성헬스' 콜라보 마케팅 …</a></li>
-                    <li><a href="#">'미에로화이바'와 '포트리스M' 콜라보 마케팅…</a></li>
-                    <li><a href="#">국내 최초 식이섬유음료, `미에로화이바` 출시…</a></li>
-                    <li><a href="#">현대약품, 전소민과 함께한 '미에로화이바' T…</a></li>
-                    <li><a href="#">빛나는 미모의 미에로화이바 모델 강소라</a></li>
-                    <li><a href="#">PRINKLE과 함께하는 비타민C9금 개그 캠…</a></li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <!-- e: section-1-->
-    
-    <!-- s: section-2 -->
-    <section class="section-2">
-       <h2 class="hide">식이섬유에 대한 정보</h2>
-        <div class="container clearfix">
-            <h2>당신이 몰랐던 식이섬유</h2>
-            <div class="left">
-                <ul class="tab-btn clearfix">
-                <li class="active">식이섬유란?</li>
-                <li>식이섬유 기능</li>
-                <li>식이섬유를 섭취하려면?</li>                
-                </ul>
-                <div class="tab-con">
-                   <div class="con-1">
+        </section>
+        <!-- e: section-1-->
+        
+        <!-- s: section-2 -->
+        <section class="section-2">
+        <h2 class="hide">식이섬유에 대한 정보</h2>
+            <div class="container clearfix">
+                <h2>당신이 몰랐던 식이섬유</h2>
+                <div class="left">
+                    <ul class="tab-btn clearfix">
+                    <li class="active">식이섬유란?</li>
+                    <li>식이섬유 기능</li>
+                    <li>식이섬유를 섭취하려면?</li>                
+                    </ul>
+                    <div class="tab-con">
+                    <div class="con-1">
+                            <h3>식이섬유란?</h3>
+                            <p>사람의 소화효소로 분해되지 않는 성분, 몸 속의 과다한 양분흡수를 막아주고, 장의 리듬을 조절하며,음식물이 장 속에 머무는 시간을 단축시키는 등 현대 식생활에 꼭 필요한 물질로 제 7의 영양소로 주목 받고 있음</p>
+
+                            <p>※ 출처 : 파워푸드 슈퍼푸드 사전</p>
+                    </div>                   
+                        <div class="con-2">
+                            <h3>식이섬유란?</h3>
+                            <p>1.배설활동 촉진, 변비 예방</p>
+                            <p>2.대사질환에 효과적</p>
+                            <p>3.콜레스테롤 감소</p>
+                            
+                        </div>
+                        <div class="con-3">
+                            <h3>식이섬유를 섭취하려면?</h3>
+                            <div class="img-con clearfix">
+                                <img src="./assets/images/mcon2_8.png" alt="딸기 여섯개나 바나나1개 토마토 2개를 섭취한것이 미에로 화이바 100mL한병">
+                                <p>딸기6개</p><p>바나나1개</p><p>토마토2개</p><p>미에로 100mL</p>                           
+                            </div>
+                            <div class="line"></div>
+                            <div class="img-con clearfix">
+                                <img src="./assets/images/mcon2_9.png" alt="딸기 여섯개나 바나나1개 토마토 2개를 섭취한것이 미에로 화이바 100mL한병">
+                                <p>딸기13개</p><p>바나나2개</p><p>토마토4개</p><p>미에로 210mL</p>                           
+                            </div>
+                            <div class="line"></div>
+                            <div class="img-con clearfix">
+                                <img src="./assets/images/mcon2_10.png" alt="딸기 여섯개나 바나나1개 토마토 2개를 섭취한것이 미에로 화이바 100mL한병">
+                                <p>딸기20개</p><p>바나나4개</p><p>토마토6개</p><p>미에로 350mL</p> 
+                            </div>
+                            <p>※ 딸기 21g/개, 바나나 100g/개, 토마토 175g/개 기준</p>
+                            <p>※ 출처 : 식품교환표(대한영양사협회 2010년판), 한국인영양섭취기준(한국영양학회 2010년 개정판)</p>
+                        </div>
+                    </div>                
+                </div>
+                <div class="mo-left">
+                    <div class="tab-btn">식이섬유란?</div>
+                    <div class="con-1 content">
                         <h3>식이섬유란?</h3>
                         <p>사람의 소화효소로 분해되지 않는 성분, 몸 속의 과다한 양분흡수를 막아주고, 장의 리듬을 조절하며,음식물이 장 속에 머무는 시간을 단축시키는 등 현대 식생활에 꼭 필요한 물질로 제 7의 영양소로 주목 받고 있음</p>
 
                         <p>※ 출처 : 파워푸드 슈퍼푸드 사전</p>
-                   </div>                   
-                    <div class="con-2">
+                </div>
+                    <div class="tab-btn">식이섬유 기능</div>
+                    <div class="con-2 content">
                         <h3>식이섬유란?</h3>
                         <p>1.배설활동 촉진, 변비 예방</p>
                         <p>2.대사질환에 효과적</p>
                         <p>3.콜레스테롤 감소</p>
-                        
+
                     </div>
-                    <div class="con-3">
+                    <div class="tab-btn">식이섬유를 섭취하려면?</div>
+                    <div class="con-3 content">
                         <h3>식이섬유를 섭취하려면?</h3>
                         <div class="img-con clearfix">
-                            <img src="images/mcon2_8.png" alt="딸기 여섯개나 바나나1개 토마토 2개를 섭취한것이 미에로 화이바 100mL한병">
+                            <img src="./assets/images/mcon2_8.png" alt="딸기 여섯개나 바나나1개 토마토 2개를 섭취한것이 미에로 화이바 100mL한병">
                             <p>딸기6개</p><p>바나나1개</p><p>토마토2개</p><p>미에로 100mL</p>                           
                         </div>
                         <div class="line"></div>
                         <div class="img-con clearfix">
-                            <img src="images/mcon2_9.png" alt="딸기 여섯개나 바나나1개 토마토 2개를 섭취한것이 미에로 화이바 100mL한병">
+                            <img src="./assets/images/mcon2_9.png" alt="딸기 여섯개나 바나나1개 토마토 2개를 섭취한것이 미에로 화이바 100mL한병">
                             <p>딸기13개</p><p>바나나2개</p><p>토마토4개</p><p>미에로 210mL</p>                           
                         </div>
                         <div class="line"></div>
                         <div class="img-con clearfix">
-                            <img src="images/mcon2_10.png" alt="딸기 여섯개나 바나나1개 토마토 2개를 섭취한것이 미에로 화이바 100mL한병">
+                            <img src="./assets/images/mcon2_10.png" alt="딸기 여섯개나 바나나1개 토마토 2개를 섭취한것이 미에로 화이바 100mL한병">
                             <p>딸기20개</p><p>바나나4개</p><p>토마토6개</p><p>미에로 350mL</p> 
                         </div>
                         <p>※ 딸기 21g/개, 바나나 100g/개, 토마토 175g/개 기준</p>
                         <p>※ 출처 : 식품교환표(대한영양사협회 2010년판), 한국인영양섭취기준(한국영양학회 2010년 개정판)</p>
                     </div>
-                </div>                
-            </div>
-            <div class="mo-left">
-                <div class="tab-btn">식이섬유란?</div>
-                <div class="con-1 content">
-                    <h3>식이섬유란?</h3>
-                    <p>사람의 소화효소로 분해되지 않는 성분, 몸 속의 과다한 양분흡수를 막아주고, 장의 리듬을 조절하며,음식물이 장 속에 머무는 시간을 단축시키는 등 현대 식생활에 꼭 필요한 물질로 제 7의 영양소로 주목 받고 있음</p>
-
-                    <p>※ 출처 : 파워푸드 슈퍼푸드 사전</p>
-               </div>
-                <div class="tab-btn">식이섬유 기능</div>
-                <div class="con-2 content">
-                    <h3>식이섬유란?</h3>
-                    <p>1.배설활동 촉진, 변비 예방</p>
-                    <p>2.대사질환에 효과적</p>
-                    <p>3.콜레스테롤 감소</p>
-
                 </div>
-                <div class="tab-btn">식이섬유를 섭취하려면?</div>
-                <div class="con-3 content">
-                    <h3>식이섬유를 섭취하려면?</h3>
-                    <div class="img-con clearfix">
-                        <img src="images/mcon2_8.png" alt="딸기 여섯개나 바나나1개 토마토 2개를 섭취한것이 미에로 화이바 100mL한병">
-                        <p>딸기6개</p><p>바나나1개</p><p>토마토2개</p><p>미에로 100mL</p>                           
-                    </div>
-                    <div class="line"></div>
-                    <div class="img-con clearfix">
-                        <img src="images/mcon2_9.png" alt="딸기 여섯개나 바나나1개 토마토 2개를 섭취한것이 미에로 화이바 100mL한병">
-                        <p>딸기13개</p><p>바나나2개</p><p>토마토4개</p><p>미에로 210mL</p>                           
-                    </div>
-                    <div class="line"></div>
-                    <div class="img-con clearfix">
-                        <img src="images/mcon2_10.png" alt="딸기 여섯개나 바나나1개 토마토 2개를 섭취한것이 미에로 화이바 100mL한병">
-                        <p>딸기20개</p><p>바나나4개</p><p>토마토6개</p><p>미에로 350mL</p> 
-                    </div>
-                    <p>※ 딸기 21g/개, 바나나 100g/개, 토마토 175g/개 기준</p>
-                    <p>※ 출처 : 식품교환표(대한영양사협회 2010년판), 한국인영양섭취기준(한국영양학회 2010년 개정판)</p>
+                
+                <div class="right">
+                    <img src="./assets/images/mcon2_7.png" alt="식이섬유가 들어있는 과일 사진">
                 </div>
             </div>
-            
-            <div class="right">
-                <img src="images/mcon2_7.png" alt="식이섬유가 들어있는 과일 사진">
-            </div>
-        </div>
-    </section>
-    <!-- e: section-2 -->
-    
-    <!-- s: section-3 -->
-    <section class="section-3">
-        <h2 class="hide">미에로화이바 제품 소개</h2>
-        <div class="container clearfix">
-            <h2>Miero Fiber</h2>
-            <div class="con">
-                <img src="images/mcon3_2.png" alt="미에로화이바">
-                <h3>미에로화이바</h3>
-                <div class="line"></div>
-                <p>식이섬유가 함유된 몸매관리에 도움을 주는 식이섬유 음료</p>
-            </div>
-            <div class="con">
-                <img src="images/mcon3_3.png" alt="미에로화이바 젤리">
-                <h3>미에로화이바 젤리</h3>
-                <div class="line"></div>
-                <p>식이섬유가 함유된 건강하고 가볍게 즐길 수 있는 젤리</p>
-            </div>
-            <div class="con">                
-                <img src="images/mcon3_4.png" alt="헬씨올리고">
-                <h3>헬씨올리고</h3>
-                <div class="line"></div>
-                <p>올리고당을 함유하고 있어, 내 몸속의 비피더스 균을 직접 키워주는 장 건강 지킴이</p>
-            </div>
-        </div>
-    </section>
-    <!-- e: section-3 -->
-    
-    <!-- s: section-4 -->
-    <section class="section-4">
-        <div class="left btn">이전</div>
-        <div class="right btn">다음</div>
-        <h2 class="hide">미에로 화이바 이벤트</h2>
-        <div class="container">
-            <h2>미에로화이바 Event</h2>
-            
-            <div class="slide-wrap">
-                <div class="slide-content clearfix"> 
-                  <img src="images/thumb-1.png" alt="미에로를 알려줘 이벤트">                                  
-                   <div class="text">
-                      <a href="#">
-                           <span>종료</span>
-                           <h4>[ 전국 미에로를 알려줘 EVENT …</h4>
-                           <p>2019.09.02 ~ 2019.09.30</p>
-                       </a>
-                   </div>     
-                </div>
-                <div class="slide-content clearfix"> 
-                   <img src="images/thumb-2.png" alt="미에로를 알려줘 이벤트">    
-                   <div class="text">
-                      <a href="#">
-                           <span>종료</span>
-                           <h4>[ 수험생 토닥토닥 EVENT ]</h4>
-                           <p>2019.11.14 ~ 2019.11.24</p>
-                       </a>
-                   </div>     
-                </div>
-                <div class="slide-content clearfix"> 
-                   <img src="images/thumb-3.png" alt="미에로를 알려줘 이벤트">   
-                   <div class="text">
-                      <a href="#">
-                           <span>종료</span>
-                           <h4>[ #미에로화이바 랑 공부하자 ]</h4>
-                           <p>2019.10.16 ~ 2019.10.27</p>
-                       </a>
-                   </div>     
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- e :section-4-->
+        </section>
+        <!-- e: section-2 -->
         
-    <!-- s: section-5 -->
-    <section class="section-5">
-       <h2 class="hide">역대 미에로 화이바 광고 모델 영상</h2>
-        <div class="container clearfix">
-            <h2>미에로화이바 Girl 스토리</h2>
-            <div class="con top">
-                <div class="inner-con">
-                    <img src="images/1.png" alt="하니 담고 들고 마시고">
-                    <div class="pop-box">
-                        <h4>TV광고</h4>
-                        <p>2019</p>
-                        <a href="#">영상보기</a>
-                    </div>
-                </div>
-                <div class="inner-con">
-                    <img src="images/2.png" alt="하니 날씬함을 닮아봐">
-                    <div class="pop-box">
-                        <h4>TV광고</h4>
-                        <p>2019</p>
-                        <a href="#">영상보기</a>
-                    </div>
-                </div>
-            </div>            
-            <div class="con long top">
-                <div class="inner-con">
-                   <a href="#">
-                       <img src="images/3.png" alt="하니 담고 들고 미에로를 마셔봐">
-                   </a>                    
-                    <div class="pop-box">
-                        <h4>인쇄광고</h4>
-                        <p>2019</p>
-                    </div>
-                </div>
-            </div>
-            <div class="con top">
-                <div class="inner-con">
-                    <img src="images/4.jpg" alt="전소민 빠져보자">
-                    <div class="pop-box">
-                        <h4>TV광고</h4>
-                        <p>2018</p>
-                        <a href="#">영상보기</a>
-                    </div>
-                </div>
-                <div class="inner-con">
-                    <a href="#">
-                        <img src="images/5.png" alt="빠져라 마셔라 날씬하게">
-                    </a>                    
-                    <div class="pop-box">
-                        <h4>인쇄광고</h4>
-                        <p>2018</p>
-                    </div>
-                </div>
-            </div>   
-            <div class="con bot">
-                <div class="inner-con">
-                    <img src="images/6.jpg" alt="강소라 마시는 식이섬유 미에로화이바">
-                    <div class="pop-box">
-                        <h4>TV광고</h4>
-                        <p>2017</p>
-                        <a href="#">영상보기</a>
-                    </div>
-                </div>
-            </div>         
-            <div class="con bot">
-                <div class="inner-con">
-                    <img src="images/7.jpg" alt="다이어트의 계절">
-                    <div class="pop-box">
-                        <h4>인쇄광고</h4>
-                        <p>2017</p>
-                    </div>
-                </div>
-            </div>
-            <div class="con bot">
-                <div class="inner-con">
-                    <a href="#">
-                        <img src="images/8.jpg" alt="강소라 미에로 화이바">
-                    </a>    
-                    <div class="pop-box">
-                        <h4>프로모션</h4>
-                        <p>2017</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- e: section-5 -->
-    
-    <!-- s: footer -->
-    <footer>
-        <div class="f-menu clearfix">
-           <h2 class="hide">하단 대메뉴</h2>
+        <!-- s: section-3 -->
+        <section class="section-3">
+            <h2 class="hide">미에로화이바 제품 소개</h2>
             <div class="container clearfix">
-               <nav class="f-nav clearfix">
-                <ul>
-                <li class="title"><a href="#">미에로</a></li>
-                <li><a href="#">브랜드 스토리</a></li>
-                <li><a href="#">식이섬유 스토리</a></li>
-                </ul>
-                <ul>
-                <li class="title"><a href="#">제품소개</a></li>
-                <li><a href="#">미에로화이바</a></li>
-                <li><a href="#">헬씨올리고</a></li>
-                <li><a href="#">헬씨올리고<br/>프로바이오틱스</a></li>
-                </ul>
-                <ul>
-                <li class="title"><a href="#">미에로 이벤트</a></li>
-                <li><a href="#">진행중인 이벤트</a></li>
-                <li><a href="#">당첨자 발표</a></li>
-                </ul>
-                <ul>
-                <li class="title"><a href="#">공지사항</a></li>
-                <li><a href="#">News&amp;Notice</a></li>
-                </ul>                
-                <ul>
-                <li class="title"><a href="#">현대약품</a></li>
-                </ul>
-                </nav>
-                <div class="connect">
-                   <span>Connect width us</span>
-                    <a href="#" class="fb"><i class="xi-facebook"></i></a>
-                    <a href="#" class="ins"><i class="xi-instagram"></i></a>
-                    <a href="#" class="you"><i class="xi-youtube-play"></i></a>
+                <h2>Miero Fiber</h2>
+                <div class="con">
+                    <img src="./assets/images/mcon3_2.png" alt="미에로화이바">
+                    <h3>미에로화이바</h3>
+                    <div class="line"></div>
+                    <p>식이섬유가 함유된 몸매관리에 도움을 주는 식이섬유 음료</p>
                 </div>
-            </div>            
-        </div>
-        <div class="copy">
-           <h2 class="hide">저작권영역</h2>
-            <h2 class="logo"><a href="#"><img src="images/f_logo.png" alt="미에로화이바"></a></h2>
-            <p>© 2018 MIERO FIBER . All Rights Reserved. </p>
-        </div>
+                <div class="con">
+                    <img src="./assets/images/mcon3_3.png" alt="미에로화이바 젤리">
+                    <h3>미에로화이바 젤리</h3>
+                    <div class="line"></div>
+                    <p>식이섬유가 함유된 건강하고 가볍게 즐길 수 있는 젤리</p>
+                </div>
+                <div class="con">                
+                    <img src="./assets/images/mcon3_4.png" alt="헬씨올리고">
+                    <h3>헬씨올리고</h3>
+                    <div class="line"></div>
+                    <p>올리고당을 함유하고 있어, 내 몸속의 비피더스 균을 직접 키워주는 장 건강 지킴이</p>
+                </div>
+            </div>
+        </section>
+        <!-- e: section-3 -->
         
-    </footer>
+        <!-- s: section-4 -->
+        <section class="section-4">
+            <div class="left btn">이전</div>
+            <div class="right btn">다음</div>
+            <h2 class="hide">미에로 화이바 이벤트</h2>
+            <div class="container">
+                <h2>미에로화이바 Event</h2>
+                
+                <div class="slide-wrap">
+                    <div class="slide-content clearfix"> 
+                    <img src="./assets/images/thumb-1.png" alt="미에로를 알려줘 이벤트">                                  
+                    <div class="text">
+                        <a href="#">
+                            <span>종료</span>
+                            <h4>[ 전국 미에로를 알려줘 EVENT …</h4>
+                            <p>2019.09.02 ~ 2019.09.30</p>
+                        </a>
+                    </div>     
+                    </div>
+                    <div class="slide-content clearfix"> 
+                    <img src="./assets/images/thumb-2.png" alt="미에로를 알려줘 이벤트">    
+                    <div class="text">
+                        <a href="#">
+                            <span>종료</span>
+                            <h4>[ 수험생 토닥토닥 EVENT ]</h4>
+                            <p>2019.11.14 ~ 2019.11.24</p>
+                        </a>
+                    </div>     
+                    </div>
+                    <div class="slide-content clearfix"> 
+                    <img src="./assets/images/thumb-3.png" alt="미에로를 알려줘 이벤트">   
+                    <div class="text">
+                        <a href="#">
+                            <span>종료</span>
+                            <h4>[ #미에로화이바 랑 공부하자 ]</h4>
+                            <p>2019.10.16 ~ 2019.10.27</p>
+                        </a>
+                    </div>     
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- e :section-4-->
+            
+        <!-- s: section-5 -->
+        <section class="section-5">
+        <h2 class="hide">역대 미에로 화이바 광고 모델 영상</h2>
+            <div class="container clearfix">
+                <h2>미에로화이바 Girl 스토리</h2>
+                <div class="con top">
+                    <div class="inner-con">
+                        <img src="./assets/images/1.png" alt="하니 담고 들고 마시고">
+                        <div class="pop-box">
+                            <h4>TV광고</h4>
+                            <p>2019</p>
+                            <a href="#">영상보기</a>
+                        </div>
+                    </div>
+                    <div class="inner-con">
+                        <img src="./assets/images/2.png" alt="하니 날씬함을 닮아봐">
+                        <div class="pop-box">
+                            <h4>TV광고</h4>
+                            <p>2019</p>
+                            <a href="#">영상보기</a>
+                        </div>
+                    </div>
+                </div>            
+                <div class="con long top">
+                    <div class="inner-con">
+                    <a href="#">
+                        <img src="./assets/images/3.png" alt="하니 담고 들고 미에로를 마셔봐">
+                    </a>                    
+                        <div class="pop-box">
+                            <h4>인쇄광고</h4>
+                            <p>2019</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="con top">
+                    <div class="inner-con">
+                        <img src="./assets/images/4.jpg" alt="전소민 빠져보자">
+                        <div class="pop-box">
+                            <h4>TV광고</h4>
+                            <p>2018</p>
+                            <a href="#">영상보기</a>
+                        </div>
+                    </div>
+                    <div class="inner-con">
+                        <a href="#">
+                            <img src="./assets/images/5.png" alt="빠져라 마셔라 날씬하게">
+                        </a>                    
+                        <div class="pop-box">
+                            <h4>인쇄광고</h4>
+                            <p>2018</p>
+                        </div>
+                    </div>
+                </div>   
+                <div class="con bot">
+                    <div class="inner-con">
+                        <img src="./assets/images/6.jpg" alt="강소라 마시는 식이섬유 미에로화이바">
+                        <div class="pop-box">
+                            <h4>TV광고</h4>
+                            <p>2017</p>
+                            <a href="#">영상보기</a>
+                        </div>
+                    </div>
+                </div>         
+                <div class="con bot">
+                    <div class="inner-con">
+                        <img src="./assets/images/7.jpg" alt="다이어트의 계절">
+                        <div class="pop-box">
+                            <h4>인쇄광고</h4>
+                            <p>2017</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="con bot">
+                    <div class="inner-con">
+                        <a href="#">
+                            <img src="./assets/images/8.jpg" alt="강소라 미에로 화이바">
+                        </a>    
+                        <div class="pop-box">
+                            <h4>프로모션</h4>
+                            <p>2017</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- e: section-5 -->
+        
+        <!-- s: footer -->
+        <footer>
+            <div class="f-menu clearfix">
+            <h2 class="hide">하단 대메뉴</h2>
+                <div class="container clearfix">
+                <nav class="f-nav clearfix">
+                    <ul>
+                    <li class="title"><a href="#">미에로</a></li>
+                    <li><a href="#">브랜드 스토리</a></li>
+                    <li><a href="#">식이섬유 스토리</a></li>
+                    </ul>
+                    <ul>
+                    <li class="title"><a href="#">제품소개</a></li>
+                    <li><a href="#">미에로화이바</a></li>
+                    <li><a href="#">헬씨올리고</a></li>
+                    <li><a href="#">헬씨올리고<br/>프로바이오틱스</a></li>
+                    </ul>
+                    <ul>
+                    <li class="title"><a href="#">미에로 이벤트</a></li>
+                    <li><a href="#">진행중인 이벤트</a></li>
+                    <li><a href="#">당첨자 발표</a></li>
+                    </ul>
+                    <ul>
+                    <li class="title"><a href="#">공지사항</a></li>
+                    <li><a href="#">News&amp;Notice</a></li>
+                    </ul>                
+                    <ul>
+                    <li class="title"><a href="#">현대약품</a></li>
+                    </ul>
+                    </nav>
+                    <div class="connect">
+                    <span>Connect width us</span>
+                        <a href="#" class="fb"><i class="xi-facebook"></i></a>
+                        <a href="#" class="ins"><i class="xi-instagram"></i></a>
+                        <a href="#" class="you"><i class="xi-youtube-play"></i></a>
+                    </div>
+                </div>            
+            </div>
+            <div class="copy">
+            <h2 class="hide">저작권영역</h2>
+                <h2 class="logo"><a href="#"><img src="./assets/images/f_logo.png" alt="미에로화이바"></a></h2>
+                <p>© 2018 MIERO FIBER . All Rights Reserved. </p>
+            </div>
+        </footer>
     <!-- e : footer-->
-    
-    
-</div>
+    </div>
 <a href="#" id=top-up></a>
-
+<script src="./assets/js/jquery-3.4.1.min.js"></script>
+<script src="./assets/js/custom.js"></script>
 </body>
 </html>
